@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="container">
+
+                <div class="row"><h1>Name Placeholder</h1></div>
+   
+                <div class="row" id="NameView"></div>
+                <div class="row">
+                    <ul class="unstyled" id="NameEntries"></ul>
+                </div>
+                <ul  class="unstyled" id="NameResult"></ul>
+
+                <div class="row" id="EmailView"></div>
+                <div class="row">
+                    <ul class="unstyled" id="EmailResult"></ul>
+                </div>
+
+                <div class="row" id="AddressView"></div>
+                <div class="row">
+                    <ul class="unstyled" id="AddressResult"></ul>
+                </div>
+
+                <div class="row" id="PhoneView"></div>
+                <div class="row">
+                    <ul class="unstyled" id="PhoneResult"></ul>
+                </div>
+
+                <div class="row" id="ComboView"></div>
+                <div class="row">
+                    <ul class="unstyled" id="ComboResult"></ul>
+                </div>
+
+
+
+            <footer></footer>
+
+        </div> <!-- /container -->
+
+        <!-- templates -->
+
+        <!-- NAME -->
+
+        <script type="text/html" id="NameForm">
+    
+        <form class="form-inline">
+          <fieldset>
+            <legend>Name Search</legend>
+            <label>First</label>
+            <input class="input-small" name="firstName" type="text" placeholder="eg. John">
+            <label>Middle</label>
+            <input class="input-small" name="middleName" type="text" placeholder="eg. Todd">
+            <label>Last</label>
+            <input class="input-small" name="lastName" type="text" placeholder="eg. Smith">
+            
+            <label for="honorific">Honorifics</label>
+            <select class="span1" name="honorific" id="honorific">
+              <option></option>
+              <option>Mr.</option>
+              <option>Ms.</option>
+              <option>Mrs.</option>
+              <option>Dr.</option>
+              <option>Miss.</option>
+            </select>
+
+            <label for="suffix">Suffixes</label>
+            <select class="span1" name="suffix" id="suffix">
+              <option></option>
+              <option>Jr.</option>
+              <option>Sr.</option>
+              <option>II.</option>
+              <option>III.</option>
+              <option>IV.</option>
+            </select>
+
+            <label>Keywords</label>
+            <input class="input-small" name="keyword1" type="text" placeholder="eg. Baseball">
+
+            <input class="input-small" name="keyword2" type="text" placeholder="eg. Drugs">
+
+
+          </fieldset>
+        </form>
+        <p>
+            <button class="btn btn-primary" id='addName'>Add Name</button>
+            <button class="btn" id='getNameResults'>Get Results</button>
+           <!-- <button class="btn btn-warning" id='clearNameResults'>Clear Results</button>
+            -->
+        </p>
+        </script>
+
+        <script type="text/html" id="NameEntry">
+
+            <li class="well well-small">
+            <ul class="unstyled inline" id="entry">
+                <li id="firstName"><%= firstName %></li>
+                <li id="middleName"><%= middleName %></li>
+                <li id="lastName"><%= lastName %></li>
+                <li id="honorific"><%= honorific %></li>
+                <li id="suffix"><%= suffix %></li>
+                <li id="keyword1"><%= keyword1 %></li>
+                <li id="keyword2"><%= keyword2 %></li>
+            </ul>
+            </li>
+
+        </script>
+
+        <script type="text/html" id="ResultEntry">
+            <li><a href='https://www.google.com/search?q=<%= result %>' target="_blank"><%= result %></a></li>
+        </script>
+
+        <!-- EMAIL -->
+        <script type="text/html" id="EmailForm">
+            <form class="form-inline">
+              <fieldset>
+                <legend>Email Search</legend>
+                    <label>First</label>
+                    <input class="input-medium" name="email" type="text" placeholder="eg. john.smith">
+                </fieldset>
+            </form>
+            <p>
+                <button class="btn" id='getEmailResults'>Get Results</button>
+            </p>
+        </script>
+
+        <script type="text/html" id="EmailResultEntry">
+            <li><a href='https://www.google.com/search?q=<%= email %>' target="_blank"><%= email %></a></li>
+        </script>
+
+        <!-- ADDRESS -->
+        <script type="text/html" id="AddressForm">
+               <form class="form-inline"> 
+                    <fieldset>
+                        <legend>Address Search</legend>
+                        <label>Address</label>
+                        <input class="span1" id="address" name="address" type="text" placeholder="eg. 621">
+                        <select class="span1" name="direction" id="direction">
+                          <option></option>
+                          <option>N</option>
+                          <option>E</option>
+                          <option>S</option>
+                          <option>W</option>
+                        </select>
+                        <label>Street</label>
+                        <input class="input-medium" id="street" name="street"  type="text" placeholder="eg. Bundy">
+                        <label>Street</label>
+                        <input class="input-medium" id="city" name="city"  type="text" placeholder="eg. Los Angeles">
+                        <label>Type</label>
+                        <select class="span1" name="type" id="type">
+                          <option></option>
+                          <option>Blvd</option>
+                          <option>St</option>
+                          <option>Dr</option>
+                          <option>Rd</option>
+                          <option>Pl</option>
+                          <option>Sq</option>
+                          <option>Pkwy</option>
+                        </select>
+                        <label >State</label>
+                        <input class="input-medium" id="state" name="state" type="text" placeholder="eg. CA">
+                    </fieldset>
+                </form>
+                <p>
+                    <button class="btn" id='getAddressResults'>Get Results</button>
+                </p>
+        </script>
+
+
+        <script type="text/html" id="AddressResultEntry">
+            <li><a href='https://www.google.com/search?q=<%= address %>' target="_blank"><%= address %></a></li>
+        </script>
+
+        <!-- PHONE -->
+        <script type="text/html" id="PhoneForm">
+            <form class="form-inline">
+                <fieldset>
+                    <legend>Phone Search</legend>
+                    <label>Phone Number</label>
+                    <input type="text" class="span1" name="area-code" id="area-code" placeholder="310">
+                    <input type="text" class="span1" name="phone-a" id="phone-a" placeholder="456">
+                    <input type="text" class="span1" name="phone-b" id="phone-b" placeholder="6789">
+                </fieldset>
+            </form>
+            <p>
+                <button class="btn" id='getPhoneResults'>Get Results</button>
+            </p>
+        </script>
+
+        <script type="text/html" id="PhoneResultEntry">
+            <li><a href='https://www.google.com/search?q=<%= phone %>' target="_blank"><%= phone %></a></li>
+        </script>
+
+        <!-- COMBO -->
+
+        <script type="text/html" id="ComboForm">
+            <form>
+                <fieldset>
+                    <legend>Get Combinations</legend>
+                </fieldset>
+            </form>
+            <p>
+            <button class="btn btn-primary" id='getNameAndNumber'>Combine Names and Phone Numbers</button>
+            <button class="btn btn-primary" id='getNameAndAddress'>Combine Names and Addresses</button>
+            </p>
+        </script>
+
+        <script type="text/html" id="ComboResultEntry">
+            <li><a href='https://www.google.com/search?q=<%= combo %>' target="_blank"><%= combo %></a></li>
+        </script>
+        
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="http://ajax.cdnjs.com/ajax/libs/underscore.js/1.1.4/underscore-min.js"></script>
+        <script src="http://ajax.cdnjs.com/ajax/libs/backbone.js/0.3.3/backbone-min.js"></script>
+
+        <script type="text/javascript" src="src/main.js"></script>
+        <script type="text/javascript" src="src/email.js"></script>
+        <script type="text/javascript" src="src/address.js"></script>
+        <script type="text/javascript" src="src/phone.js"></script>
+        <script type="text/javascript" src="src/comb.js"></script>
+    </body>
+</html>
